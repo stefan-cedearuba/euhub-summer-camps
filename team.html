@@ -1,0 +1,617 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" type="image/png" href="assets/favicon.png">
+  <title>The Team | EU HUB Summer Programme</title>
+  <link rel="stylesheet" href="assets/site-shared.css">
+  <style>
+    :root {
+      --ink: #13245a;
+      --muted: #647186;
+      --line: #d8e5ea;
+      --navy: #203f8e;
+      --teal: #16b7b6;
+      --teal-dark: #087682;
+      --magenta: #d12a91;
+      --amber: #f4b51f;
+      --shadow: 0 18px 44px rgba(19, 36, 90, 0.12);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at top left, rgba(22, 183, 182, 0.18), transparent 34rem),
+        radial-gradient(circle at top right, rgba(209, 42, 145, 0.12), transparent 30rem),
+        linear-gradient(180deg, #fbfdff, #f6fafc);
+      line-height: 1.5;
+    }
+
+    main {
+      width: min(1120px, calc(100% - 32px));
+      margin: 0 auto;
+      padding: 24px 0 50px;
+    }
+
+    nav {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 42px;
+    }
+
+    nav a {
+      min-height: 38px;
+      display: inline-flex;
+      align-items: center;
+      padding: 9px 12px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.82);
+      color: var(--navy);
+      text-decoration: none;
+      font-weight: 800;
+    }
+
+    nav a:hover,
+    nav a.active {
+      color: #fff;
+      background: var(--teal-dark);
+      border-color: var(--teal-dark);
+    }
+
+    .hero {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(260px, 0.62fr);
+      gap: 22px;
+      align-items: end;
+      margin-bottom: 22px;
+    }
+
+    .eyebrow {
+      width: fit-content;
+      margin: 0 0 12px;
+      padding: 7px 10px;
+      border-radius: 8px;
+      background: rgba(22, 183, 182, 0.12);
+      color: var(--teal-dark);
+      font-size: 0.78rem;
+      font-weight: 900;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: clamp(2.6rem, 8vw, 5.6rem);
+      line-height: 0.95;
+    }
+
+    .lead {
+      margin: 18px 0 0;
+      max-width: 720px;
+      color: var(--muted);
+      font-size: 1.12rem;
+      font-weight: 650;
+    }
+
+    .team-note {
+      padding: 18px;
+      border-radius: 8px;
+      border: 1px solid var(--line);
+      background: #fff;
+      box-shadow: var(--shadow);
+    }
+
+    .team-note strong {
+      display: block;
+      font-size: 1.1rem;
+    }
+
+    .team-note span {
+      display: block;
+      margin-top: 5px;
+      color: var(--muted);
+      font-weight: 650;
+    }
+
+    .section {
+      margin-top: 28px;
+    }
+
+    .section h2 {
+      margin: 0 0 14px;
+      font-size: 1.5rem;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 14px;
+    }
+
+    .card {
+      min-height: 188px;
+      display: grid;
+      align-content: start;
+      gap: 12px;
+      padding: 18px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #fff;
+      box-shadow: var(--shadow);
+    }
+
+    .avatar {
+      width: 54px;
+      height: 54px;
+      display: grid;
+      place-items: center;
+      border-radius: 8px;
+      color: #fff;
+      background: var(--navy);
+      font-size: 1.18rem;
+      font-weight: 900;
+    }
+
+    .card:nth-child(2) .avatar {
+      background: var(--teal-dark);
+    }
+
+    .card:nth-child(3) .avatar {
+      background: var(--magenta);
+    }
+
+    .card:nth-child(4) .avatar {
+      background: #9b7a13;
+    }
+
+    .card h3 {
+      margin: 0;
+      font-size: 1.14rem;
+    }
+
+    .role {
+      margin: -7px 0 0;
+      color: var(--muted);
+      font-size: 0.9rem;
+      font-weight: 800;
+    }
+
+    .card p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 0.94rem;
+      font-weight: 650;
+    }
+
+    .pill-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      padding: 18px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.84);
+      box-shadow: var(--shadow);
+    }
+
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      min-height: 34px;
+      padding: 7px 10px;
+      border-radius: 8px;
+      background: rgba(22, 183, 182, 0.12);
+      color: var(--teal-dark);
+      font-weight: 850;
+    }
+
+    .site-footer {
+      margin-top: 34px;
+      padding: 22px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.84);
+      box-shadow: var(--shadow);
+    }
+
+    .site-footer h2 {
+      margin: 0;
+      font-size: 1.35rem;
+      line-height: 1.15;
+    }
+
+    .site-footer p {
+      max-width: 740px;
+      margin: 10px 0 0;
+      color: var(--muted);
+      font-size: 0.94rem;
+      font-weight: 650;
+    }
+
+    .external-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 16px;
+    }
+
+    .external-links a {
+      display: inline-flex;
+      align-items: center;
+      min-height: 40px;
+      padding: 9px 12px;
+      border-radius: 8px;
+      border: 1px solid var(--line);
+      background: #fff;
+      color: var(--navy);
+      text-decoration: none;
+      font-weight: 800;
+    }
+
+    .site-footer .note {
+      max-width: none;
+      white-space: nowrap;
+    }
+
+    .site-footer.shared-footer {
+      text-align: center;
+    }
+
+    .site-footer.shared-footer .note {
+      max-width: none;
+      margin: 10px auto 0;
+      white-space: nowrap;
+    }
+
+    .site-footer .external-links {
+      justify-content: center;
+    }
+
+    .site-footer.shared-footer .external-links {
+      width: 100%;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .site-footer .external-links a {
+      gap: 8px;
+      justify-content: center;
+    }
+
+    .site-footer .external-links svg {
+      width: 18px;
+      height: 18px;
+      flex: 0 0 auto;
+      stroke: currentColor;
+      stroke-width: 2;
+      fill: none;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    .site-credit {
+      margin-top: 22px;
+      padding-top: 18px;
+      border-top: 1px solid var(--line);
+      text-align: center;
+    }
+
+    .site-footer.shared-footer .site-credit {
+      text-align: center;
+    }
+
+    .creator-role {
+      display: block;
+      margin-top: 3px;
+      font-size: 0.84rem;
+      font-style: italic;
+      font-weight: 600;
+    }
+
+    .collab-button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      margin-top: 8px;
+      min-height: 38px;
+      padding: 8px 12px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #fff;
+      color: var(--navy);
+      box-shadow: 0 10px 20px rgba(19, 36, 90, 0.08);
+      font-weight: 850;
+      text-decoration: none;
+    }
+
+    .site-footer.shared-footer .site-credit {
+      display: grid;
+      justify-items: center;
+    }
+
+    .hero {
+      grid-template-columns: minmax(0, 1.35fr) minmax(280px, 0.85fr);
+      align-items: end;
+      max-width: none;
+    }
+
+    .team-note {
+      min-height: 154px;
+      border: 1px solid rgba(216, 229, 234, 0.95);
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.74);
+      box-shadow: 0 24px 58px rgba(19, 36, 90, 0.1);
+    }
+
+    .team-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 16px;
+    }
+
+    .team-card {
+      position: relative;
+      display: grid;
+      grid-template-rows: auto 1fr;
+      min-height: 440px;
+      overflow: hidden;
+      border: 1px solid rgba(216, 229, 234, 0.92);
+      border-radius: 8px;
+      background:
+        radial-gradient(circle at 50% 0%, rgba(22, 183, 182, 0.13), transparent 12rem),
+        rgba(255, 255, 255, 0.88);
+      box-shadow: var(--shadow);
+      transition: transform 180ms ease, box-shadow 180ms ease;
+    }
+
+    .team-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 24px 52px rgba(19, 36, 90, 0.16);
+    }
+
+    .portrait-wrap {
+      position: relative;
+      display: grid;
+      place-items: center;
+      min-height: 250px;
+      padding: 16px 14px 0;
+    }
+
+    .portrait-wrap::before {
+      display: none;
+    }
+
+    .portrait-wrap img {
+      position: relative;
+      z-index: 1;
+      width: min(238px, 94%);
+      aspect-ratio: 1;
+      object-fit: contain;
+      filter: drop-shadow(0 18px 24px rgba(19, 36, 90, 0.15));
+    }
+
+    .team-body {
+      display: grid;
+      grid-template-rows: auto auto 1fr auto;
+      align-content: start;
+      gap: 10px;
+      padding: 18px;
+      text-align: center;
+    }
+
+    .team-body h3 {
+      margin: 0;
+      min-height: 2.7rem;
+      display: grid;
+      place-items: center;
+      font-size: 1.22rem;
+      line-height: 1.1;
+    }
+
+    .team-role {
+      min-height: 2.05rem;
+      display: grid;
+      place-items: center;
+      color: var(--accent, var(--teal-dark));
+      font-size: 0.86rem;
+      line-height: 1.12;
+      font-weight: 900;
+      text-transform: uppercase;
+    }
+
+    .team-body p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 0.92rem;
+      font-weight: 650;
+    }
+
+    .mail-button {
+      width: fit-content;
+      margin: 8px auto 0;
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      min-height: 36px;
+      padding: 8px 11px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.72);
+      color: var(--navy);
+      text-decoration: none;
+      font-weight: 850;
+      box-shadow: 0 10px 20px rgba(19, 36, 90, 0.08);
+    }
+
+    .mail-button:hover {
+      color: #fff;
+      background: var(--teal-dark);
+    }
+
+    .mail-button svg {
+      width: 16px;
+      height: 16px;
+      stroke: currentColor;
+      stroke-width: 2;
+      fill: none;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    @media (max-width: 920px) {
+      .hero,
+      .grid,
+      .team-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+
+    @media (max-width: 680px) {
+      main {
+        width: min(100% - 22px, 1120px);
+      }
+
+      .hero,
+      .grid,
+      .team-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .site-footer .note {
+        white-space: normal;
+      }
+
+      .site-footer.shared-footer .note {
+        white-space: normal;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <div data-site-header data-active-page="team"></div>
+
+    <section class="hero">
+      <div>
+        <p class="eyebrow">Meet our team</p>
+        <h1>The people helping make it happen.</h1>
+        <p class="lead">
+          The programme is coordinated by CEDE Aruba and EUHUB, supported by volunteers, local staff, and Centro di Bario partners working together across the summer camps.
+        </p>
+      </div>
+      <aside class="team-note" aria-hidden="true"></aside>
+    </section>
+
+    <section class="section">
+      <h2>Core Team</h2>
+      <div class="team-grid">
+        <article class="team-card" style="--accent: var(--teal-dark);">
+          <div class="portrait-wrap">
+            <img src="assets/team-shahaira.png" alt="Shahaira Rodulfo">
+          </div>
+          <div class="team-body">
+            <h3>Shahaira Rodulfo</h3>
+            <div class="team-role">Project Coordinator</div>
+            <p>Connects partners, people, and planning so the programme has the support it needs to run with care and clarity.</p>
+            <a class="mail-button" href="mailto:euyouth@cedearuba.org">
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <rect x="3" y="5" width="18" height="14" rx="2"></rect>
+                <path d="m3 7 9 6 9-6"></path>
+              </svg>
+              Email
+            </a>
+          </div>
+        </article>
+        <article class="team-card" style="--accent: var(--teal);">
+          <div class="portrait-wrap">
+            <img src="assets/team-stephany.png" alt="Stephany Lewis">
+          </div>
+          <div class="team-body">
+            <h3>Stephany Lewis</h3>
+            <div class="team-role">BARiO UNICO Program Officer</div>
+            <p>Supports BARiO UNICO programme flow, neighborhood connection, and the bridge between project ideas and local action.</p>
+            <a class="mail-button" href="mailto:barionanunico@cedearuba.org">
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <rect x="3" y="5" width="18" height="14" rx="2"></rect>
+                <path d="m3 7 9 6 9-6"></path>
+              </svg>
+              Email
+            </a>
+          </div>
+        </article>
+        <article class="team-card" style="--accent: var(--navy);">
+          <div class="portrait-wrap">
+            <img src="assets/team-nicole.png" alt="Nicole Hart">
+          </div>
+          <div class="team-body">
+            <h3>Nicole Hart</h3>
+            <div class="team-role">Program Coordinator</div>
+            <p>Guides programme flow, local coordination, and the day-to-day camp experience with structure and attention.</p>
+            <a class="mail-button" href="mailto:nicole@cedearuba.org">
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <rect x="3" y="5" width="18" height="14" rx="2"></rect>
+                <path d="m3 7 9 6 9-6"></path>
+              </svg>
+              Email
+            </a>
+          </div>
+        </article>
+        <article class="team-card" style="--accent: var(--magenta);">
+          <div class="portrait-wrap">
+            <img src="assets/team-stefan.png" alt="Stefan Nikolovski">
+          </div>
+          <div class="team-body">
+            <h3>Stefan Nikolovski</h3>
+            <div class="team-role">Short Term ESC Volunteer</div>
+            <p>Helps as project assistant and social media support, keeping practical details and communication moving.</p>
+            <a class="mail-button" href="mailto:stefan.cedearuba@gmail.com">
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <rect x="3" y="5" width="18" height="14" rx="2"></rect>
+                <path d="m3 7 9 6 9-6"></path>
+              </svg>
+              Email
+            </a>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section class="section">
+      <h2>Volunteers</h2>
+      <div class="pill-list">
+        <span class="pill">Gabriele</span>
+        <span class="pill">Anna</span>
+        <span class="pill">Alessandra</span>
+        <span class="pill">Eivile</span>
+        <span class="pill">Manos</span>
+        <span class="pill">Luvija</span>
+      </div>
+    </section>
+
+    <section class="section">
+      <h2>Community Partners</h2>
+      <div class="pill-list">
+        <span class="pill">Centro di Bario Playa Pabou</span>
+        <span class="pill">Centro di Bario Noord</span>
+        <span class="pill">Centro Famia Piedra Plat</span>
+        <span class="pill">Centro di Bario Dakota</span>
+        <span class="pill">Centro di Bario Santa Cruz</span>
+        <span class="pill">BARiO UNICO</span>
+      </div>
+    </section>
+
+    <div data-site-footer></div>
+  </main>
+  <script src="assets/site-components.js"></script>
+</body>
+</html>

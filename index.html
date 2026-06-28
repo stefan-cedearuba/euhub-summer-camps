@@ -1,0 +1,1322 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" type="image/png" href="assets/favicon.png">
+  <title>EU HUB Summer Programme</title>
+  <style>
+    :root {
+      --ink: #13245a;
+      --muted: #647186;
+      --line: #d8e5ea;
+      --panel: #ffffff;
+      --navy: #203f8e;
+      --teal: #16b7b6;
+      --teal-dark: #087682;
+      --magenta: #d12a91;
+      --amber: #f4b51f;
+      --soft: #f6fbfc;
+      --shadow: 0 18px 44px rgba(19, 36, 90, 0.12);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      color: var(--ink);
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      line-height: 1.5;
+      background:
+        radial-gradient(circle at top left, rgba(22, 183, 182, 0.2), transparent 34rem),
+        radial-gradient(circle at top right, rgba(209, 42, 145, 0.14), transparent 30rem),
+        linear-gradient(180deg, rgba(251, 253, 255, 0.98), rgba(246, 250, 252, 0.98));
+    }
+
+    a {
+      color: inherit;
+    }
+
+    .shell {
+      width: min(1180px, calc(100% - 32px));
+      margin: 0 auto;
+      padding: 20px 0 44px;
+    }
+
+    .topbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px;
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      padding: 12px 0;
+      backdrop-filter: blur(14px);
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      min-width: 0;
+      text-decoration: none;
+    }
+
+    .mark {
+      width: 60px;
+      height: 60px;
+      display: grid;
+      place-items: center;
+      flex: 0 0 auto;
+      padding: 6px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #fff;
+      box-shadow: 0 10px 24px rgba(19, 36, 90, 0.12);
+    }
+
+    .mark img {
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+    }
+
+    .brand-text strong {
+      display: block;
+      font-size: 1rem;
+      line-height: 1.05;
+    }
+
+    .brand-text span {
+      display: block;
+      margin-top: 3px;
+      color: var(--muted);
+      font-size: 0.84rem;
+      font-weight: 700;
+    }
+
+    .nav {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .eu-cofunded {
+      width: min(190px, 20vw);
+      flex: 0 0 auto;
+      display: block;
+      margin: 10px 0 0 auto;
+      padding: 6px 8px;
+      border: 1px solid rgba(216, 229, 234, 0.9);
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.82);
+      box-shadow: 0 10px 22px rgba(19, 36, 90, 0.1);
+    }
+
+    .nav a {
+      display: inline-flex;
+      align-items: center;
+      min-height: 38px;
+      padding: 8px 12px;
+      border: 1px solid rgba(216, 229, 234, 0.9);
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.76);
+      color: var(--navy);
+      text-decoration: none;
+      font-size: 0.9rem;
+      font-weight: 800;
+    }
+
+    .nav a:hover,
+    .nav a.active {
+      color: #fff;
+      border-color: var(--teal-dark);
+      background: var(--teal-dark);
+    }
+
+    .hero {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(340px, 0.98fr);
+      gap: 18px;
+      align-items: stretch;
+      min-height: calc(100vh - 118px);
+      padding: 34px 0 24px;
+    }
+
+    .hero-copy {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      min-width: 0;
+    }
+
+    .eyebrow {
+      width: fit-content;
+      margin: 0 0 14px;
+      padding: 7px 10px;
+      border-radius: 8px;
+      background: rgba(22, 183, 182, 0.12);
+      color: var(--teal-dark);
+      font-size: 0.78rem;
+      font-weight: 900;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    h1 {
+      margin: 0;
+      max-width: 760px;
+      font-size: clamp(2.5rem, 7vw, 5.8rem);
+      line-height: 0.96;
+      letter-spacing: 0;
+      color: var(--ink);
+    }
+
+    .lead {
+      max-width: 680px;
+      margin: 22px 0 0;
+      color: var(--muted);
+      font-size: clamp(1.05rem, 2vw, 1.28rem);
+      font-weight: 650;
+    }
+
+    .actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 28px;
+    }
+
+    .button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 44px;
+      padding: 10px 14px;
+      border-radius: 8px;
+      border: 1px solid transparent;
+      text-decoration: none;
+      font-weight: 850;
+    }
+
+    .button.primary {
+      color: #fff;
+      background: var(--navy);
+      box-shadow: 0 14px 26px rgba(19, 36, 90, 0.2);
+    }
+
+    .button.secondary {
+      color: var(--navy);
+      background: #fff;
+      border-color: var(--line);
+    }
+
+    .hero-panel {
+      display: grid;
+      align-content: center;
+      gap: 14px;
+      min-width: 0;
+    }
+
+    .welcome-card,
+    .info-card,
+    .link-band {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.84);
+      box-shadow: var(--shadow);
+    }
+
+    .welcome-card {
+      padding: 22px;
+      border-top: 5px solid var(--magenta);
+    }
+
+    .welcome-card h2,
+    .section-title {
+      margin: 0;
+      font-size: 1.35rem;
+      line-height: 1.15;
+    }
+
+    .welcome-card p,
+    .info-card p {
+      margin: 10px 0 0;
+      color: var(--muted);
+      font-weight: 650;
+    }
+
+    .info-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 14px;
+      margin-top: 18px;
+    }
+
+    .info-card {
+      padding: 18px;
+    }
+
+    .info-card span {
+      display: inline-flex;
+      width: 34px;
+      height: 34px;
+      align-items: center;
+      justify-content: center;
+      border-radius: 8px;
+      color: #fff;
+      background: var(--teal-dark);
+      font-weight: 900;
+    }
+
+    .info-card:nth-child(2) span {
+      background: var(--magenta);
+    }
+
+    .info-card:nth-child(3) span {
+      background: #9b7a13;
+    }
+
+    .task-carousel {
+      position: relative;
+      min-height: 560px;
+      margin-top: 16px;
+      overflow: hidden;
+      border: 1px solid rgba(216, 229, 234, 0.85);
+      border-radius: 8px;
+      background:
+        radial-gradient(circle at 50% 45%, rgba(22, 183, 182, 0.18), transparent 16rem),
+        radial-gradient(circle at 18% 22%, rgba(209, 42, 145, 0.12), transparent 16rem),
+        radial-gradient(circle at 84% 78%, rgba(244, 181, 31, 0.16), transparent 15rem),
+        rgba(255, 255, 255, 0.88);
+      box-shadow: var(--shadow);
+      perspective: 1200px;
+    }
+
+    .tasks-logo {
+      position: absolute;
+      left: 50%;
+      top: 47%;
+      z-index: 1;
+      width: min(176px, 27vw);
+      display: block;
+      opacity: 0.22;
+      filter: drop-shadow(0 12px 20px rgba(19, 36, 90, 0.1));
+      transform: translate(-50%, -50%);
+      pointer-events: none;
+    }
+
+    .carousel-glow {
+      position: absolute;
+      inset: 56px 14% 46px;
+      border: 1px dashed rgba(8, 118, 130, 0.36);
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.36);
+    }
+
+    .task-track {
+      position: absolute;
+      inset: 0;
+      transform-style: preserve-3d;
+    }
+
+    .task-slide {
+      --accent: var(--teal);
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      z-index: 1;
+      width: min(420px, 70vw);
+      min-height: 205px;
+      display: grid;
+      gap: 16px;
+      align-content: start;
+      padding: 20px;
+      border-radius: 8px;
+      border: 1px solid rgba(216, 229, 234, 0.9);
+      background: rgba(255, 255, 255, 0.95);
+      box-shadow: 0 22px 44px rgba(19, 36, 90, 0.16);
+      transform: translate(-50%, -50%);
+      animation: taskCarousel 25s infinite linear;
+      will-change: transform, opacity, filter;
+    }
+
+    .task-slide:hover {
+      box-shadow: 0 28px 52px rgba(19, 36, 90, 0.22);
+    }
+
+    .task-slide::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      border-radius: inherit;
+      border-top: 8px solid var(--accent);
+      pointer-events: none;
+    }
+
+    .task-slide:nth-child(1) {
+      --accent: var(--teal);
+      animation-delay: 0s;
+    }
+
+    .task-slide:nth-child(2) {
+      --accent: var(--magenta);
+      animation-delay: -4s;
+    }
+
+    .task-slide:nth-child(3) {
+      --accent: var(--navy);
+      animation-delay: -8s;
+    }
+
+    .task-slide:nth-child(4) {
+      --accent: var(--amber);
+      animation-delay: -12s;
+    }
+
+    .task-slide:nth-child(5) {
+      --accent: #8bc43f;
+      animation-delay: -16s;
+    }
+
+    .task-slide h3 {
+      margin: 0;
+      max-width: 300px;
+      color: var(--ink);
+      font-size: clamp(1.18rem, 2.2vw, 1.56rem);
+      line-height: 1.05;
+    }
+
+    .task-slide p {
+      margin: 0;
+      color: var(--muted);
+      font-size: clamp(0.92rem, 1.5vw, 1.04rem);
+      font-weight: 700;
+      line-height: 1.38;
+    }
+
+    .task-slide span {
+      width: 50px;
+      aspect-ratio: 1;
+      display: grid;
+      place-items: center;
+      border-radius: 50%;
+      color: #fff;
+      background: var(--accent);
+      font-size: 1.08rem;
+      font-weight: 950;
+      box-shadow: 0 14px 26px color-mix(in srgb, var(--accent) 38%, transparent);
+    }
+
+    @keyframes taskCarousel {
+      0% {
+        z-index: 5;
+        opacity: 1;
+        filter: blur(0);
+        transform: translate(-50%, -50%) translateX(0) translateY(58px) translateZ(190px) scale(1.04);
+      }
+
+      20% {
+        z-index: 4;
+        opacity: 0.76;
+        filter: blur(0);
+        transform: translate(-50%, -50%) translateX(340px) translateY(-18px) translateZ(-100px) rotateY(-22deg) scale(0.7);
+      }
+
+      40% {
+        z-index: 2;
+        opacity: 0.24;
+        filter: blur(1.2px);
+        transform: translate(-50%, -50%) translateX(190px) translateY(-138px) translateZ(-320px) rotateY(-32deg) scale(0.52);
+      }
+
+      60% {
+        z-index: 1;
+        opacity: 0.18;
+        filter: blur(1.6px);
+        transform: translate(-50%, -50%) translateX(-190px) translateY(-138px) translateZ(-340px) rotateY(32deg) scale(0.5);
+      }
+
+      80% {
+        z-index: 3;
+        opacity: 0.72;
+        filter: blur(0);
+        transform: translate(-50%, -50%) translateX(-340px) translateY(-18px) translateZ(-100px) rotateY(22deg) scale(0.7);
+      }
+
+      100% {
+        z-index: 5;
+        opacity: 1;
+        filter: blur(0);
+        transform: translate(-50%, -50%) translateX(0) translateY(58px) translateZ(190px) scale(1.04);
+      }
+    }
+
+    .section {
+      padding: 34px 0 0;
+    }
+
+    .partner-card {
+      display: grid;
+      justify-items: center;
+      gap: 12px;
+      text-align: center;
+    }
+
+    .partner-grid {
+      grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+    }
+
+    .partner-card p {
+      margin: 0;
+    }
+
+    .partner-card h3 {
+      margin: 0;
+      font-size: 1.18rem;
+      line-height: 1.1;
+    }
+
+    .partner-logo {
+      width: min(300px, 100%);
+      height: 128px;
+      display: grid;
+      place-items: center;
+    }
+
+    .partner-logo img {
+      display: block;
+      max-width: 100%;
+      max-height: 100%;
+      object-fit: contain;
+    }
+
+    .partner-logo.square img {
+      max-width: 128px;
+    }
+
+    .partner-logo.wide img {
+      max-height: 86px;
+    }
+
+    .learn-button,
+    .modal-close {
+      min-height: 40px;
+      padding: 9px 12px;
+      border: 1px solid transparent;
+      border-radius: 8px;
+      color: #fff;
+      background: var(--navy);
+      font: inherit;
+      font-weight: 850;
+      cursor: pointer;
+    }
+
+    .learn-button {
+      min-height: 36px;
+      padding: 8px 11px;
+      border-color: rgba(216, 229, 234, 0.95);
+      color: var(--navy);
+      background: rgba(255, 255, 255, 0.58);
+      box-shadow: 0 10px 20px rgba(19, 36, 90, 0.08);
+      backdrop-filter: blur(12px);
+      font-size: 0.92rem;
+    }
+
+    .learn-button:hover {
+      color: #fff;
+      background: var(--teal-dark);
+    }
+
+    .modal-close:hover {
+      color: #fff;
+      background: var(--teal-dark);
+    }
+
+    .org-modal {
+      width: min(620px, calc(100% - 28px));
+      padding: 0;
+      border: 1px solid rgba(255, 255, 255, 0.55);
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.72);
+      box-shadow: 0 30px 80px rgba(19, 36, 90, 0.28);
+      backdrop-filter: blur(24px) saturate(1.35);
+    }
+
+    .org-modal::backdrop {
+      background: rgba(19, 36, 90, 0.32);
+      backdrop-filter: blur(10px);
+    }
+
+    .modal-card {
+      position: relative;
+      display: grid;
+      justify-items: center;
+      gap: 18px;
+      padding: 28px;
+      text-align: center;
+      background:
+        radial-gradient(circle at 18% 12%, rgba(22, 183, 182, 0.2), transparent 15rem),
+        radial-gradient(circle at 86% 18%, rgba(209, 42, 145, 0.13), transparent 15rem),
+        rgba(255, 255, 255, 0.56);
+    }
+
+    .modal-card img {
+      width: min(400px, 100%);
+      display: block;
+    }
+
+    .modal-card h3 {
+      margin: 0;
+      font-size: clamp(1.45rem, 3vw, 2rem);
+      line-height: 1.05;
+    }
+
+    .modal-card p {
+      max-width: 500px;
+      margin: 0;
+      color: var(--muted);
+      font-weight: 700;
+    }
+
+    .modal-links {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 10px;
+    }
+
+    .modal-links a {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      min-height: 42px;
+      min-width: 44px;
+      padding: 9px 12px;
+      border-radius: 8px;
+      color: var(--navy);
+      border: 1px solid rgba(216, 229, 234, 0.95);
+      background: rgba(255, 255, 255, 0.72);
+      text-decoration: none;
+      font-weight: 850;
+    }
+
+    .modal-links a:hover {
+      color: #fff;
+      border-color: var(--teal-dark);
+      background: var(--teal-dark);
+    }
+
+    .modal-links svg {
+      width: 20px;
+      height: 20px;
+      stroke: currentColor;
+      stroke-width: 2;
+      fill: none;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    .modal-logo-square {
+      max-width: 190px;
+    }
+
+    .modal-logo-wide {
+      max-width: 420px;
+    }
+
+    .modal-close {
+      position: absolute;
+      right: 16px;
+      top: 16px;
+      min-width: 40px;
+      padding: 8px;
+      background: rgba(19, 36, 90, 0.88);
+    }
+
+    .link-band {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+      padding: 18px;
+      margin-top: 16px;
+    }
+
+    .quick-link {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+      min-height: 74px;
+      padding: 14px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #fff;
+      text-decoration: none;
+    }
+
+    .quick-link strong {
+      display: block;
+      font-size: 1rem;
+    }
+
+    .quick-link span {
+      display: block;
+      margin-top: 3px;
+      color: var(--muted);
+      font-size: 0.9rem;
+      font-weight: 650;
+    }
+
+    .quick-link em {
+      flex: 0 0 auto;
+      width: 32px;
+      height: 32px;
+      display: grid;
+      place-items: center;
+      border-radius: 8px;
+      color: #fff;
+      background: var(--navy);
+      font-style: normal;
+      font-weight: 900;
+    }
+
+    .site-footer {
+      margin-top: 38px;
+      padding: 22px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.84);
+      box-shadow: var(--shadow);
+    }
+
+    .site-footer.shared-footer {
+      text-align: center;
+    }
+
+    .external-links {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 10px;
+      margin-top: 16px;
+    }
+
+    .site-footer.shared-footer .external-links {
+      width: 100%;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .external-links a {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      justify-content: center;
+      min-height: 40px;
+      padding: 9px 12px;
+      border-radius: 8px;
+      border: 1px solid var(--line);
+      background: #fff;
+      color: var(--navy);
+      text-decoration: none;
+      font-weight: 800;
+    }
+
+    .external-links svg {
+      width: 18px;
+      height: 18px;
+      flex: 0 0 auto;
+      stroke: currentColor;
+      stroke-width: 2;
+      fill: none;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    .site-credit {
+      margin-top: 22px;
+      padding-top: 18px;
+      border-top: 1px solid var(--line);
+      color: var(--muted);
+      text-align: center;
+      font-size: 0.92rem;
+      font-weight: 650;
+    }
+
+    .site-footer.shared-footer .site-credit {
+      text-align: center;
+      display: grid;
+      justify-items: center;
+    }
+
+    .site-credit p {
+      margin: 5px 0 0;
+    }
+
+    .creator-name {
+      color: var(--ink);
+      font-weight: 850;
+    }
+
+    .creator-role {
+      display: block;
+      margin-top: 3px;
+      font-size: 0.84rem;
+      font-style: italic;
+      font-weight: 600;
+    }
+
+    .site-credit a {
+      color: var(--navy);
+      font-weight: 850;
+      text-decoration: none;
+    }
+
+    .site-credit .collab-button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      margin-top: 8px;
+      min-height: 38px;
+      padding: 8px 12px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #fff;
+      box-shadow: 0 10px 20px rgba(19, 36, 90, 0.08);
+    }
+
+    .site-credit .collab-button:hover {
+      color: #fff;
+      background: var(--teal-dark);
+      text-decoration: none;
+    }
+
+    .note {
+      max-width: 740px;
+      color: var(--muted);
+      font-size: 0.94rem;
+      font-weight: 650;
+    }
+
+    .footer-note {
+      max-width: none;
+      margin: 10px auto 0;
+      white-space: nowrap;
+    }
+
+    @media (max-width: 760px) {
+      .footer-note {
+        white-space: normal;
+      }
+    }
+
+    @media (max-width: 900px) {
+      .topbar {
+        align-items: flex-start;
+        position: static;
+      }
+
+      .hero,
+      .info-grid,
+      .link-band {
+        grid-template-columns: 1fr;
+      }
+
+      .hero {
+        min-height: 0;
+      }
+
+      .task-carousel {
+        min-height: 520px;
+      }
+
+      .partner-logo {
+        width: min(240px, 100%);
+      }
+
+      .partner-logo.wide img {
+        max-width: min(230px, 92%);
+        max-height: 76px;
+      }
+
+      .carousel-glow {
+        inset: 36px 7% 34px;
+      }
+
+    .task-slide {
+        width: min(380px, calc(100% - 34px));
+        min-height: 230px;
+      }
+
+      @keyframes taskCarousel {
+        0% {
+          z-index: 5;
+          opacity: 1;
+          filter: blur(0);
+          transform: translate(-50%, -50%) translateX(0) translateY(72px) translateZ(160px) scale(1);
+        }
+
+        20% {
+          z-index: 4;
+          opacity: 0.66;
+          filter: blur(0);
+          transform: translate(-50%, -50%) translateX(185px) translateY(-20px) translateZ(-100px) rotateY(-20deg) scale(0.68);
+        }
+
+        40% {
+          z-index: 2;
+          opacity: 0.18;
+          filter: blur(1.2px);
+          transform: translate(-50%, -50%) translateX(84px) translateY(-116px) translateZ(-230px) rotateY(-24deg) scale(0.5);
+        }
+
+        60% {
+      z-index: 2;
+          opacity: 0.14;
+          filter: blur(1.6px);
+          transform: translate(-50%, -50%) translateX(-84px) translateY(-116px) translateZ(-250px) rotateY(24deg) scale(0.48);
+        }
+
+        80% {
+          z-index: 3;
+          opacity: 0.64;
+          filter: blur(0);
+          transform: translate(-50%, -50%) translateX(-185px) translateY(-20px) translateZ(-100px) rotateY(20deg) scale(0.68);
+        }
+
+        100% {
+          z-index: 5;
+          opacity: 1;
+          filter: blur(0);
+          transform: translate(-50%, -50%) translateX(0) translateY(72px) translateZ(160px) scale(1);
+        }
+      }
+    }
+
+    @media (max-width: 680px) {
+      .shell {
+        width: min(100% - 22px, 1180px);
+        padding-top: 12px;
+      }
+
+      .topbar,
+      .brand {
+        align-items: flex-start;
+      }
+
+      .topbar {
+        flex-direction: column;
+      }
+
+      .nav {
+        justify-content: flex-start;
+      }
+
+      .eu-cofunded {
+        width: min(180px, 58vw);
+        margin: 8px 0 0;
+      }
+
+      .mark {
+        width: 54px;
+        height: 54px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="shell">
+    <header class="topbar">
+      <a class="brand" href="index.html" aria-label="EU HUB Summer Programme home">
+        <span class="mark" aria-hidden="true">
+          <img src="assets/euhub-logo.jpg" alt="">
+        </span>
+        <span class="brand-text">
+          <strong>EU HUB</strong>
+          <span>Summer Programme</span>
+        </span>
+      </a>
+
+      <nav class="nav" aria-label="Main menu">
+        <a class="active" href="index.html">Home</a>
+        <a href="agenda.html">Agenda</a>
+        <a href="media.html">Media</a>
+        <a href="team.html">The Team</a>
+        <a href="useful-info.html">Useful Information</a>
+        <a href="take-home.html">What we take home</a>
+      </nav>
+    </header>
+    <img class="eu-cofunded" src="assets/eu-cofunded-logo.png" alt="Co-funded by the European Union">
+
+    <section class="hero">
+      <div class="hero-copy">
+        <p class="eyebrow">Welcome to Aruba</p>
+        <h1>Bon Bini<br>Summer Camps!</h1>
+        <p class="lead">
+          This summer is about showing up with care, energy, and openness. Together with CEDE Aruba, the EUHUB, BARiO UNICO, and the participating neighbourhood centres, your task will be to help create safe, joyful, and meaningful camp days for children across Aruba.
+        </p>
+        <div class="actions">
+          <a class="button primary" href="agenda.html">Open Agenda</a>
+          <a class="button secondary" href="useful-info.html">Useful Information</a>
+        </div>
+      </div>
+
+      <aside class="hero-panel" aria-label="Welcome message">
+        <article class="welcome-card">
+          <h2>You help make the summer happen.</h2>
+          <p>
+            By showing up with kindness, creativity, and commitment, you become part of something bigger than yourself. Your role helps create fun, connection, and impact across the whole programme.
+          </p>
+        </article>
+        <article class="welcome-card">
+          <h2>What you take home matters too.</h2>
+          <p>
+            This summer is not only about giving — it is also about learning, growing, and discovering what you are capable of. You will gain experience, connection, and a stronger sense of purpose.
+          </p>
+        </article>
+      </aside>
+    </section>
+
+    <section class="section" aria-label="Programme focus">
+      <h2 class="section-title">What are your main tasks:</h2>
+      <div class="task-carousel">
+        <img class="tasks-logo" src="assets/euhub-logo-transparent.png" alt="">
+        <div class="carousel-glow" aria-hidden="true"></div>
+        <div class="task-track" aria-label="Main task carousel">
+          <article class="task-slide">
+            <span>01</span>
+            <h3>Lead Fun Activities</h3>
+            <p>Plan and lead games, workshops, and creative activities for children.</p>
+          </article>
+          <article class="task-slide">
+            <span>02</span>
+            <h3>Support Camp Programs</h3>
+            <p>Help with sports, cultural, and educational activities throughout the camp.</p>
+          </article>
+          <article class="task-slide">
+            <span>03</span>
+            <h3>Work as a Team</h3>
+            <p>Support local staff in the daily coordination and organization of camp life.</p>
+          </article>
+          <article class="task-slide">
+            <span>04</span>
+            <h3>Bring Your Energy</h3>
+            <p>Share enthusiasm, fresh ideas, and an international spirit to create a memorable summer experience.</p>
+          </article>
+          <article class="task-slide">
+            <span>05</span>
+            <h3>Experience is a Plus</h3>
+            <p>Previous experience working with children is an advantage, but not required.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" aria-label="Partner organizations">
+      <h2 class="section-title">Who Is Behind It</h2>
+      <div class="info-grid partner-grid">
+        <article class="info-card partner-card">
+          <div class="partner-logo">
+            <img src="assets/cede-gradient-logo.png" alt="CEDE Aruba">
+          </div>
+          <h3>CEDE Aruba</h3>
+          <button class="learn-button" type="button" data-modal-target="cede-modal">Learn More</button>
+        </article>
+        <article class="info-card partner-card">
+          <div class="partner-logo square">
+            <img src="assets/euhub-logo-transparent.png" alt="EUHUB CEDE Aruba">
+          </div>
+          <h3>EUHUB</h3>
+          <button class="learn-button" type="button" data-modal-target="euhub-modal">Learn More</button>
+        </article>
+        <article class="info-card partner-card">
+          <div class="partner-logo wide">
+            <img src="assets/bario-unico-logo.png" alt="BARiO UNICO">
+          </div>
+          <h3>BARiO UNICO</h3>
+          <button class="learn-button" type="button" data-modal-target="bario-modal">Learn More</button>
+        </article>
+        <article class="info-card partner-card">
+          <div class="partner-logo square">
+            <img src="assets/gobierno-aruba-logo.png" alt="Government of Aruba">
+          </div>
+          <h3>Government of Aruba</h3>
+          <button class="learn-button" type="button" data-modal-target="gobierno-modal">Learn More</button>
+        </article>
+        <article class="info-card partner-card">
+          <div class="partner-logo wide">
+            <img src="assets/sfc-logo.png" alt="Samenwerkende Fondsen Cariben">
+          </div>
+          <h3>Samenwerkende Fondsen Cariben</h3>
+          <button class="learn-button" type="button" data-modal-target="sfc-modal">Learn More</button>
+        </article>
+      </div>
+    </section>
+
+    <dialog class="org-modal" id="cede-modal" aria-labelledby="cede-modal-title">
+      <div class="modal-card">
+        <button class="modal-close" type="button" data-modal-close aria-label="Close CEDE Aruba popup">X</button>
+        <img src="assets/cede-gradient-logo.png" alt="CEDE Aruba">
+        <h3 id="cede-modal-title">CEDE Aruba</h3>
+        <p>
+          CEDE Aruba is a nonprofit organization supporting social development, youth initiatives, civil society, training, and project development across Aruba since 1977.
+        </p>
+        <div class="modal-links">
+          <a href="https://www.cedearuba.org" target="_blank" rel="noreferrer" aria-label="CEDE Aruba website">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <circle cx="12" cy="12" r="10"></circle>
+              <path d="M2 12h20"></path>
+              <path d="M12 2a15.3 15.3 0 0 1 0 20"></path>
+              <path d="M12 2a15.3 15.3 0 0 0 0 20"></path>
+            </svg>
+            Website
+          </a>
+          <a href="https://www.instagram.com/cedearuba/" target="_blank" rel="noreferrer" aria-label="CEDE Aruba Instagram">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <rect x="3" y="3" width="18" height="18" rx="5"></rect>
+              <circle cx="12" cy="12" r="4"></circle>
+              <path d="M17.5 6.5h.01"></path>
+            </svg>
+            Instagram
+          </a>
+        </div>
+      </div>
+    </dialog>
+
+    <dialog class="org-modal" id="euhub-modal" aria-labelledby="euhub-modal-title">
+      <div class="modal-card">
+        <button class="modal-close" type="button" data-modal-close aria-label="Close EUHUB popup">X</button>
+        <img class="modal-logo-square" src="assets/euhub-logo-transparent.png" alt="EUHUB CEDE Aruba">
+        <h3 id="euhub-modal-title">EUHUB</h3>
+        <p>
+          EUHUB connects Aruba and Europe through youth opportunities, international learning, volunteering, and community-based collaboration.
+        </p>
+        <div class="modal-links">
+          <a href="https://www.instagram.com/euhubaruba/" target="_blank" rel="noreferrer" aria-label="EUHUB Instagram">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <rect x="3" y="3" width="18" height="18" rx="5"></rect>
+              <circle cx="12" cy="12" r="4"></circle>
+              <path d="M17.5 6.5h.01"></path>
+            </svg>
+            Instagram
+          </a>
+        </div>
+      </div>
+    </dialog>
+
+    <dialog class="org-modal" id="bario-modal" aria-labelledby="bario-modal-title">
+      <div class="modal-card">
+        <button class="modal-close" type="button" data-modal-close aria-label="Close BARiO UNICO popup">X</button>
+        <img src="assets/bario-unico-logo.png" alt="BARiO UNICO">
+        <h3 id="bario-modal-title">BARiO UNICO</h3>
+        <p>
+          BARiO UNICO is a CEDE Aruba community initiative supporting stronger, healthier, and more connected neighborhoods through inclusive local projects.
+        </p>
+        <div class="modal-links">
+          <a href="https://www.bariounico.org/" target="_blank" rel="noreferrer" aria-label="BARiO UNICO website">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <circle cx="12" cy="12" r="10"></circle>
+              <path d="M2 12h20"></path>
+              <path d="M12 2a15.3 15.3 0 0 1 0 20"></path>
+              <path d="M12 2a15.3 15.3 0 0 0 0 20"></path>
+            </svg>
+            Website
+          </a>
+          <a href="https://www.instagram.com/bariounico/" target="_blank" rel="noreferrer" aria-label="BARiO UNICO Instagram">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <rect x="3" y="3" width="18" height="18" rx="5"></rect>
+              <circle cx="12" cy="12" r="4"></circle>
+              <path d="M17.5 6.5h.01"></path>
+            </svg>
+            Instagram
+          </a>
+        </div>
+      </div>
+    </dialog>
+
+    <dialog class="org-modal" id="gobierno-modal" aria-labelledby="gobierno-modal-title">
+      <div class="modal-card">
+        <button class="modal-close" type="button" data-modal-close aria-label="Close Government of Aruba popup">X</button>
+        <img class="modal-logo-square" src="assets/gobierno-aruba-logo.png" alt="Government of Aruba">
+        <h3 id="gobierno-modal-title">Government of Aruba</h3>
+        <p>
+          The Government of Aruba is a key supporter of this programme, helping fund community centers and strengthen collaboration around neighborhood needs.
+        </p>
+        <div class="modal-links">
+          <a href="https://www.gobierno.aw/" target="_blank" rel="noreferrer" aria-label="Government of Aruba website">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <circle cx="12" cy="12" r="10"></circle>
+              <path d="M2 12h20"></path>
+              <path d="M12 2a15.3 15.3 0 0 1 0 20"></path>
+              <path d="M12 2a15.3 15.3 0 0 0 0 20"></path>
+            </svg>
+            Website
+          </a>
+        </div>
+      </div>
+    </dialog>
+
+    <dialog class="org-modal" id="sfc-modal" aria-labelledby="sfc-modal-title">
+      <div class="modal-card">
+        <button class="modal-close" type="button" data-modal-close aria-label="Close Samenwerkende Fondsen Cariben popup">X</button>
+        <img class="modal-logo-wide" src="assets/sfc-logo.png" alt="Samenwerkende Fondsen Cariben">
+        <h3 id="sfc-modal-title">Samenwerkende Fondsen Cariben</h3>
+        <p>
+          Samenwerkende Fondsen Cariben supports social projects across the Dutch Caribbean, helping local initiatives like BARiO UNICO grow community involvement and equal opportunities.
+        </p>
+        <div class="modal-links">
+          <a href="https://www.samenwerkendefondsencariben.org/" target="_blank" rel="noreferrer" aria-label="Samenwerkende Fondsen Cariben website">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <circle cx="12" cy="12" r="10"></circle>
+              <path d="M2 12h20"></path>
+              <path d="M12 2a15.3 15.3 0 0 1 0 20"></path>
+              <path d="M12 2a15.3 15.3 0 0 0 0 20"></path>
+            </svg>
+            Website
+          </a>
+        </div>
+      </div>
+    </dialog>
+
+    <section class="section" aria-label="Page links">
+      <h2 class="section-title">Explore</h2>
+      <div class="link-band">
+        <a class="quick-link" href="agenda.html">
+          <span>
+            <strong>Agenda</strong>
+            <span>Daily schedule, locations, contacts, and assignments.</span>
+          </span>
+          <em>→</em>
+        </a>
+        <a class="quick-link" href="media.html">
+          <span>
+            <strong>Media</strong>
+            <span>Photos, videos, and moments from the programme.</span>
+          </span>
+          <em>→</em>
+        </a>
+        <a class="quick-link" href="team.html">
+          <span>
+            <strong>The Team</strong>
+            <span>Volunteers, staff, and partner contacts.</span>
+          </span>
+          <em>→</em>
+        </a>
+        <a class="quick-link" href="useful-info.html">
+          <span>
+            <strong>Useful Information</strong>
+            <span>Practical details, links, notes, and reminders.</span>
+          </span>
+          <em>→</em>
+        </a>
+        <a class="quick-link" href="take-home.html">
+          <span>
+            <strong>What we take home</strong>
+            <span>Reflections, learning, growth, and memories from the programme.</span>
+          </span>
+          <em>→</em>
+        </a>
+      </div>
+    </section>
+
+    <footer class="site-footer shared-footer" aria-label="Footer links">
+      <h2 class="section-title">Helpful Links</h2>
+      <p class="note footer-note">
+        Follow the programme, learn more about CEDE Aruba and BARiO UNICO, or contact the EUHUB team directly.
+      </p>
+      <div class="external-links">
+        <a href="https://www.instagram.com/euhubaruba/" target="_blank" rel="noreferrer">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <rect x="3" y="3" width="18" height="18" rx="5"></rect>
+            <circle cx="12" cy="12" r="4"></circle>
+            <path d="M17.5 6.5h.01"></path>
+          </svg>
+          @euhubaruba
+        </a>
+        <a href="https://www.instagram.com/cedearuba/" target="_blank" rel="noreferrer">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <rect x="3" y="3" width="18" height="18" rx="5"></rect>
+            <circle cx="12" cy="12" r="4"></circle>
+            <path d="M17.5 6.5h.01"></path>
+          </svg>
+          @cedearuba
+        </a>
+        <a href="https://www.instagram.com/bariounico/" target="_blank" rel="noreferrer">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <rect x="3" y="3" width="18" height="18" rx="5"></rect>
+            <circle cx="12" cy="12" r="4"></circle>
+            <path d="M17.5 6.5h.01"></path>
+          </svg>
+          @bariounico
+        </a>
+        <a href="https://www.cedearuba.org" target="_blank" rel="noreferrer">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <circle cx="12" cy="12" r="10"></circle>
+            <path d="M2 12h20"></path>
+            <path d="M12 2a15.3 15.3 0 0 1 0 20"></path>
+            <path d="M12 2a15.3 15.3 0 0 0 0 20"></path>
+          </svg>
+          cedearuba.org
+        </a>
+        <a href="https://www.bariounico.org" target="_blank" rel="noreferrer">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <circle cx="12" cy="12" r="10"></circle>
+            <path d="M2 12h20"></path>
+            <path d="M12 2a15.3 15.3 0 0 1 0 20"></path>
+            <path d="M12 2a15.3 15.3 0 0 0 0 20"></path>
+          </svg>
+          bariounico.org
+        </a>
+        <a href="mailto:euyouth@cedearuba.org">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <rect x="3" y="5" width="18" height="14" rx="2"></rect>
+            <path d="m3 7 9 6 9-6"></path>
+          </svg>
+          euyouth@cedearuba.org
+        </a>
+      </div>
+      <div class="site-credit">
+        <p>© All rights reserved</p>
+        <p>
+          Created by: <span class="creator-name">Stefan Nikolovski</span>
+          <span class="creator-role">ESC Short Term Volunteer at EUHUB</span>
+        </p>
+        <p><a class="collab-button" href="https://hihello.com/p/f9c31a1c-9994-4742-8c19-7009e31fc018" target="_blank" rel="noreferrer">Connect to collaborate</a></p>
+      </div>
+    </footer>
+  </main>
+  <script>
+    document.querySelectorAll("[data-modal-target]").forEach((button) => {
+      button.addEventListener("click", () => {
+        const modal = document.getElementById(button.dataset.modalTarget);
+        if (modal) {
+          modal.showModal();
+        }
+      });
+    });
+
+    document.querySelectorAll("[data-modal-close]").forEach((button) => {
+      button.addEventListener("click", () => {
+        button.closest("dialog")?.close();
+      });
+    });
+
+    document.querySelectorAll(".org-modal").forEach((modal) => {
+      modal.addEventListener("click", (event) => {
+        if (event.target === modal) {
+          modal.close();
+        }
+      });
+    });
+  </script>
+</body>
+</html>
