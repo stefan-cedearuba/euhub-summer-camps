@@ -63,13 +63,17 @@ document.querySelectorAll("[data-site-footer]").forEach((target) => {
 const agendaRosterCsvUrl = "https://docs.google.com/spreadsheets/d/e/2PACX-1vTjUUx_mmfTqDn0tKSHa8t8Jcc9SdZU-4OqSuvlX23poHnViMv7t_S5m2fMGD64iAs77mli0QawSrNU/pub?gid=1205072565&single=true&output=csv";
 const agendaContactsCsvUrl = "https://docs.google.com/spreadsheets/d/e/2PACX-1vTjUUx_mmfTqDn0tKSHa8t8Jcc9SdZU-4OqSuvlX23poHnViMv7t_S5m2fMGD64iAs77mli0QawSrNU/pub?gid=211358017&single=true&output=csv";
 let agendaContactRecords = [];
+let agendaRosterRecords = { volunteers: [], staff: [] };
 
 if (document.querySelector("#volunteerList") && document.querySelector("#staffList")) {
   syncAgendaSheetTabs();
   setInterval(syncAgendaSheetTabs, 60000);
   const agendaCards = document.querySelector("#weeks");
   if (agendaCards) {
-    new MutationObserver(() => applyAgendaContactDirectory()).observe(agendaCards, {
+    new MutationObserver(() => {
+      applyAgendaRosterAndFilter();
+      applyAgendaContactDirectory();
+    }).observe(agendaCards, {
       childList: true,
       subtree: true
     });
@@ -84,9 +88,9 @@ async function syncAgendaSheetTabs() {
       fetchSharedCsvRows(agendaContactsCsvUrl, cacheBust)
     ]);
     const roster = sharedRosterFromRows(rosterRows);
+    agendaRosterRecords = roster;
     agendaContactRecords = sharedContactsFromRows(contactRows);
-    applySharedRoster(roster);
-    applySharedPersonFilter(roster, agendaContactRecords);
+    applyAgendaRosterAndFilter();
     applyAgendaContactDirectory();
   } catch (error) {
     console.warn("Roster/contact sheet tabs could not be synced.", error);
@@ -181,6 +185,19 @@ function applySharedRoster(roster) {
   }
 }
 
+function applyAgendaRosterAndFilter() {
+  const derivedPeople = sharedAgendaPeopleFromCards();
+  const staffTokens = agendaRosterRecords.staff.map((name) => sharedLookup(name).split(" ")[0]).filter(Boolean);
+  const derivedStaff = derivedPeople.filter((name) => staffTokens.includes(sharedLookup(name).split(" ")[0]));
+  const derivedVolunteers = derivedPeople.filter((name) => !derivedStaff.includes(name));
+  const mergedRoster = {
+    volunteers: sharedUnique([...agendaRosterRecords.volunteers, ...derivedVolunteers]),
+    staff: sharedUnique([...agendaRosterRecords.staff, ...derivedStaff])
+  };
+  applySharedRoster(mergedRoster);
+  applySharedPersonFilter(mergedRoster, agendaContactRecords);
+}
+
 function applySharedPersonFilter(roster, contacts) {
   const personFilter = document.querySelector("#personFilter");
   if (!personFilter) return;
@@ -207,6 +224,12 @@ function applySharedPersonFilter(roster, contacts) {
     </optgroup>
   `;
   personFilter.value = [...personFilter.options].some((option) => option.value === currentValue) ? currentValue : "all";
+}
+
+function sharedAgendaPeopleFromCards() {
+  return sharedUnique([...document.querySelectorAll(".people .chip")]
+    .map((chip) => chip.textContent)
+    .filter((name) => !["Volunteers", "Staff", "Everyone"].includes(String(name || "").trim())));
 }
 
 function applyAgendaContactDirectory() {
