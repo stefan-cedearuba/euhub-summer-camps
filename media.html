@@ -6,16 +6,709 @@
   <link rel="icon" type="image/png" href="assets/favicon.png">
   <title>Media | EU HUB Summer Programme</title>
   <link rel="stylesheet" href="assets/site-shared.css">
+  <style>
+    :root {
+      --teal: #16b7b6;
+      --magenta: #d12a91;
+      --lime: #95c83d;
+      --amber: #f4b51f;
+      --paper: rgba(255, 255, 255, 0.84);
+    }
+
+    .media-hero {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(280px, 390px);
+      gap: 24px;
+      align-items: end;
+      margin-top: 34px;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      min-height: 34px;
+      padding: 7px 12px;
+      border-radius: 8px;
+      background: rgba(22, 183, 182, 0.12);
+      color: var(--teal-dark);
+      font-size: 0.78rem;
+      font-weight: 900;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .media-title {
+      max-width: 760px;
+      margin: 18px 0 0;
+      color: var(--ink);
+      font-size: clamp(3rem, 8vw, 6.7rem);
+      line-height: 0.88;
+      letter-spacing: 0;
+    }
+
+    .media-copy {
+      max-width: 680px;
+      margin: 22px 0 0;
+      color: var(--muted);
+      font-size: clamp(1rem, 1.9vw, 1.25rem);
+      font-weight: 680;
+    }
+
+    .hero-actions,
+    .folder-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 24px;
+    }
+
+    .media-button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 42px;
+      padding: 10px 14px;
+      border: 1px solid var(--teal-dark);
+      border-radius: 8px;
+      background: var(--teal-dark);
+      color: #fff;
+      text-decoration: none;
+      font-weight: 900;
+      box-shadow: 0 12px 24px rgba(8, 118, 130, 0.18);
+      cursor: pointer;
+    }
+
+    .media-button.secondary {
+      border-color: var(--line);
+      background: rgba(255, 255, 255, 0.78);
+      color: var(--navy);
+      box-shadow: none;
+    }
+
+    .media-button[aria-disabled="true"] {
+      opacity: 0.55;
+      pointer-events: none;
+    }
+
+    .folder-card {
+      padding: 22px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: var(--paper);
+      box-shadow: var(--shadow);
+    }
+
+    .folder-icon {
+      width: 58px;
+      height: 58px;
+      display: grid;
+      place-items: center;
+      border-radius: 8px;
+      color: #fff;
+      background: linear-gradient(135deg, var(--navy), var(--teal-dark));
+      box-shadow: 0 14px 24px rgba(19, 36, 90, 0.18);
+    }
+
+    .folder-card h2 {
+      margin: 18px 0 0;
+      font-size: 1.55rem;
+      line-height: 1.05;
+    }
+
+    .folder-card p {
+      margin: 12px 0 0;
+      color: var(--muted);
+      font-weight: 650;
+    }
+
+    .status-pill {
+      display: inline-flex;
+      width: fit-content;
+      align-items: center;
+      min-height: 29px;
+      margin-top: 14px;
+      padding: 6px 9px;
+      border-radius: 8px;
+      background: rgba(244, 181, 31, 0.16);
+      color: #80580a;
+      font-size: 0.76rem;
+      font-weight: 900;
+    }
+
+    .status-pill.live {
+      background: rgba(22, 183, 182, 0.12);
+      color: var(--teal-dark);
+    }
+
+    .section-head {
+      display: flex;
+      align-items: end;
+      justify-content: space-between;
+      gap: 18px;
+      margin-top: 58px;
+    }
+
+    .section-head h2 {
+      margin: 0;
+      font-size: clamp(1.9rem, 4vw, 3.3rem);
+      line-height: 0.96;
+    }
+
+    .section-head p {
+      max-width: 430px;
+      margin: 0;
+      color: var(--muted);
+      font-weight: 650;
+    }
+
+    .filter-strip {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 9px;
+      margin-top: 20px;
+    }
+
+    .filter-button {
+      display: inline-flex;
+      align-items: center;
+      min-height: 34px;
+      padding: 7px 11px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.78);
+      color: var(--navy);
+      font-size: 0.86rem;
+      font-weight: 850;
+      cursor: pointer;
+    }
+
+    .filter-button.active,
+    .filter-button:hover {
+      border-color: var(--teal-dark);
+      background: var(--teal-dark);
+      color: #fff;
+    }
+
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 14px;
+      margin-top: 22px;
+    }
+
+    .media-tile {
+      min-height: 286px;
+      display: grid;
+      align-content: end;
+      position: relative;
+      overflow: hidden;
+      padding: 16px;
+      border: 1px solid rgba(216, 229, 234, 0.86);
+      border-radius: 8px;
+      background:
+        linear-gradient(180deg, transparent 18%, rgba(19, 36, 90, 0.72)),
+        var(--tile-bg);
+      background-size: cover;
+      background-position: center;
+      box-shadow: 0 16px 34px rgba(19, 36, 90, 0.13);
+      transition: transform 0.18s ease, box-shadow 0.18s ease;
+    }
+
+    .media-tile:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 22px 42px rgba(19, 36, 90, 0.18);
+    }
+
+    .media-tile::before {
+      content: "";
+      position: absolute;
+      inset: 12px;
+      border: 1px solid rgba(255, 255, 255, 0.36);
+      border-radius: 8px;
+      pointer-events: none;
+    }
+
+    .tile-link {
+      position: absolute;
+      inset: 0;
+      z-index: 2;
+    }
+
+    .tile-content {
+      position: relative;
+      z-index: 1;
+      color: #fff;
+    }
+
+    .tag-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-bottom: 10px;
+    }
+
+    .tag {
+      display: inline-flex;
+      align-items: center;
+      min-height: 25px;
+      padding: 4px 8px;
+      border-radius: 6px;
+      background: rgba(255, 255, 255, 0.88);
+      color: var(--navy);
+      font-size: 0.72rem;
+      font-weight: 900;
+    }
+
+    .media-tile h3 {
+      margin: 0;
+      font-size: 1.28rem;
+      line-height: 1.08;
+    }
+
+    .media-tile p {
+      margin: 7px 0 0;
+      color: rgba(255, 255, 255, 0.86);
+      font-size: 0.9rem;
+      font-weight: 700;
+    }
+
+    .media-state {
+      margin-top: 22px;
+      padding: 22px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: var(--paper);
+      color: var(--muted);
+      font-weight: 700;
+      box-shadow: var(--shadow);
+    }
+
+    .split-section {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(280px, 430px);
+      gap: 16px;
+      margin-top: 22px;
+    }
+
+    .week-board,
+    .guidelines {
+      padding: 22px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: var(--paper);
+      box-shadow: var(--shadow);
+    }
+
+    .week-board h3,
+    .guidelines h3 {
+      margin: 0;
+      font-size: 1.35rem;
+    }
+
+    .week-list {
+      display: grid;
+      gap: 10px;
+      margin-top: 16px;
+    }
+
+    .week-item {
+      display: grid;
+      grid-template-columns: 92px minmax(0, 1fr) auto;
+      gap: 12px;
+      align-items: center;
+      padding: 12px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.72);
+    }
+
+    .week-date {
+      color: var(--teal-dark);
+      font-size: 0.82rem;
+      font-weight: 900;
+    }
+
+    .week-name {
+      color: var(--ink);
+      font-weight: 850;
+    }
+
+    .week-count {
+      color: var(--muted);
+      font-size: 0.82rem;
+      font-weight: 800;
+    }
+
+    .guidelines ul {
+      margin: 16px 0 0;
+      padding: 0;
+      list-style: none;
+      display: grid;
+      gap: 10px;
+    }
+
+    .guidelines li {
+      display: grid;
+      grid-template-columns: 12px minmax(0, 1fr);
+      gap: 10px;
+      color: var(--muted);
+      font-weight: 650;
+    }
+
+    .guidelines li::before {
+      content: "";
+      width: 9px;
+      height: 9px;
+      margin-top: 8px;
+      border-radius: 999px;
+      background: var(--teal);
+    }
+
+    @media (max-width: 940px) {
+      .media-hero,
+      .split-section {
+        grid-template-columns: 1fr;
+      }
+
+      .gallery-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+
+    @media (max-width: 640px) {
+      .section-head {
+        align-items: start;
+        flex-direction: column;
+      }
+
+      .gallery-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .media-tile {
+        min-height: 244px;
+      }
+
+      .week-item {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
 </head>
 <body>
   <main class="shell">
     <div data-site-header data-active-page="media"></div>
-    <h1 class="page-title">Media</h1>
-    <div class="placeholder">
-      <p class="page-copy">This page is ready for photos, videos, and programme moments. We will build it next.</p>
-    </div>
+
+    <section class="media-hero" aria-label="Media gallery introduction">
+      <div>
+        <span class="eyebrow">Shared memories</span>
+        <h1 class="media-title">Media Gallery</h1>
+        <p class="media-copy">A warm little home for photos, videos, and camp moments from across the summer. Once OneDrive is connected, new files from the shared folder will appear here automatically.</p>
+        <div class="hero-actions">
+          <a class="media-button" id="uploadButton" href="#" target="_blank" rel="noreferrer" aria-disabled="true">Upload photos</a>
+          <a class="media-button secondary" id="folderButton" href="#" target="_blank" rel="noreferrer" aria-disabled="true">Open full folder</a>
+        </div>
+      </div>
+
+      <aside class="folder-card" aria-label="OneDrive folder status">
+        <div class="folder-icon" aria-hidden="true">
+          <svg width="31" height="31" viewBox="0 0 24 24" fill="none">
+            <path d="M3 7.5A2.5 2.5 0 0 1 5.5 5H10l2 2h6.5A2.5 2.5 0 0 1 21 9.5v7A2.5 2.5 0 0 1 18.5 19h-13A2.5 2.5 0 0 1 3 16.5v-9Z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+          </svg>
+        </div>
+        <h2>OneDrive auto-sync</h2>
+        <p id="syncDescription">Preview mode is showing sample media. After the Cloudflare Worker is connected, this card will show the live folder status.</p>
+        <span class="status-pill" id="syncStatus">Preview mode</span>
+      </aside>
+    </section>
+
+    <section aria-label="Featured media">
+      <div class="section-head">
+        <h2>Latest Memories</h2>
+        <p id="gallerySummary">Loading media from the summer camps folder.</p>
+      </div>
+
+      <div class="filter-strip" id="filterStrip" aria-label="Media filters"></div>
+      <div class="media-state" id="mediaState">Loading media...</div>
+      <div class="gallery-grid" id="galleryGrid"></div>
+    </section>
+
+    <section aria-label="Browse media">
+      <div class="section-head">
+        <h2>Browse by Week</h2>
+        <p>A simple structure so the gallery does not become one giant pile of photos.</p>
+      </div>
+
+      <div class="split-section">
+        <div class="week-board">
+          <h3>Suggested folders</h3>
+          <div class="week-list" id="weekList"></div>
+        </div>
+
+        <aside class="guidelines">
+          <h3>Upload reminders</h3>
+          <ul>
+            <li>Upload clear photos and avoid duplicates when possible.</li>
+            <li>Use date or location folders so everyone can find things later.</li>
+            <li>Be mindful with photos of children and permissions.</li>
+            <li>New OneDrive files will show here after the gallery refreshes.</li>
+          </ul>
+        </aside>
+      </div>
+    </section>
+
     <div data-site-footer></div>
   </main>
+
+  <script>
+    const MEDIA_API_URL = "/api/media";
+    const UPLOAD_FOLDER_URL = "https://cedeaua-my.sharepoint.com/:f:/g/personal/escvolunteers_cedearuba_org/IgCO_FusSdWwRrrZGCsYpwSHAXThtqDw_13uh72n3OG5tqM?e=JyIKwV";
+    const REFRESH_MS = 5 * 60 * 1000;
+    const demoMedia = [
+      {
+        title: "Creative camp moments",
+        caption: "Games, workshops, and joyful daily snapshots.",
+        week: "20 - 24 July",
+        location: "Playa Pabou",
+        category: "Activities",
+        type: "image",
+        url: "#",
+        thumbnail: "",
+        color: "linear-gradient(135deg, #087682, #16b7b6 48%, #95c83d)"
+      },
+      {
+        title: "Volunteers in action",
+        caption: "Energy, care, and teamwork across the centres.",
+        week: "27 - 31 July",
+        location: "Piedra Plat",
+        category: "Team",
+        type: "image",
+        url: "#",
+        thumbnail: "",
+        color: "linear-gradient(135deg, #203f8e, #16b7b6 52%, #f4b51f)"
+      },
+      {
+        title: "Making it happen",
+        caption: "Prep, coordination, arrivals, and everyday details.",
+        week: "3 - 7 August",
+        location: "Dakota",
+        category: "Behind the scenes",
+        type: "image",
+        url: "#",
+        thumbnail: "",
+        color: "linear-gradient(135deg, #d12a91, #203f8e 48%, #16b7b6)"
+      },
+      {
+        title: "Exploring together",
+        caption: "Learning, movement, and shared discovery.",
+        week: "10 - 14 August",
+        location: "Santa Cruz",
+        category: "Discover Aruba",
+        type: "image",
+        url: "#",
+        thumbnail: "",
+        color: "linear-gradient(135deg, #f4b51f, #d12a91 46%, #203f8e)"
+      },
+      {
+        title: "Hands-on activities",
+        caption: "Photos grouped by age group, week, and location.",
+        week: "3 - 7 August",
+        location: "Piedra Plat",
+        category: "Workshops",
+        type: "image",
+        url: "#",
+        thumbnail: "",
+        color: "linear-gradient(135deg, #95c83d, #16b7b6 48%, #203f8e)"
+      },
+      {
+        title: "Summer highlights",
+        caption: "A curated collection for sharing after the programme.",
+        week: "10 - 14 August",
+        location: "All locations",
+        category: "Highlights",
+        type: "image",
+        url: "#",
+        thumbnail: "",
+        color: "linear-gradient(135deg, #13245a, #087682 44%, #d12a91)"
+      }
+    ];
+
+    const weekOrder = ["3 - 17 July", "20 - 24 July", "27 - 31 July", "3 - 7 August", "10 - 14 August"];
+    const filterStrip = document.querySelector("#filterStrip");
+    const galleryGrid = document.querySelector("#galleryGrid");
+    const gallerySummary = document.querySelector("#gallerySummary");
+    const mediaState = document.querySelector("#mediaState");
+    const weekList = document.querySelector("#weekList");
+    const syncStatus = document.querySelector("#syncStatus");
+    const syncDescription = document.querySelector("#syncDescription");
+    const uploadButton = document.querySelector("#uploadButton");
+    const folderButton = document.querySelector("#folderButton");
+    let mediaItems = demoMedia;
+    let activeFilter = "All";
+    let isPreviewMode = true;
+
+    function configureFolderButtons(folderUrl) {
+      if (!folderUrl) return;
+      [uploadButton, folderButton].forEach((button) => {
+        button.href = folderUrl;
+        button.setAttribute("aria-disabled", "false");
+      });
+    }
+
+    async function loadMedia() {
+      try {
+        const response = await fetch(`${MEDIA_API_URL}?cacheBust=${Date.now()}`, { cache: "no-store" });
+        if (!response.ok) throw new Error(`Media request failed: ${response.status}`);
+        const data = await response.json();
+        if (!Array.isArray(data.items) || !data.items.length) throw new Error("No media items returned");
+        mediaItems = normalizeMediaItems(data.items);
+        isPreviewMode = false;
+        configureFolderButtons(data.folderUrl || UPLOAD_FOLDER_URL);
+        syncStatus.textContent = "Live from OneDrive";
+        syncStatus.classList.add("live");
+        syncDescription.textContent = "This gallery is reading from the connected OneDrive folder through Cloudflare.";
+      } catch (error) {
+        mediaItems = demoMedia;
+        isPreviewMode = true;
+        configureFolderButtons(UPLOAD_FOLDER_URL);
+        syncStatus.textContent = "Preview mode";
+        syncStatus.classList.remove("live");
+        syncDescription.textContent = "Preview mode is showing sample media. The automatic OneDrive feed will appear here after the Worker is connected.";
+      }
+
+      renderFilters();
+      renderGallery();
+      renderWeeks();
+    }
+
+    function normalizeMediaItems(items) {
+      return items.map((item, index) => ({
+        title: item.title || item.name || `Media item ${index + 1}`,
+        caption: item.caption || item.description || "Summer camp media from the shared folder.",
+        week: item.week || inferWeek(item.name || item.title || ""),
+        location: item.location || inferLocation(item.name || item.title || ""),
+        category: item.category || (item.type === "video" ? "Video" : "Photo"),
+        type: item.type || "image",
+        url: item.url || item.webUrl || "#",
+        thumbnail: item.thumbnail || item.thumbnailUrl || item.downloadUrl || "",
+        color: item.color || demoMedia[index % demoMedia.length].color
+      }));
+    }
+
+    function inferWeek(value) {
+      const text = String(value).toLowerCase();
+      if (text.includes("20") || text.includes("24")) return "20 - 24 July";
+      if (text.includes("27") || text.includes("31")) return "27 - 31 July";
+      if (text.includes("10") || text.includes("14")) return "10 - 14 August";
+      if (text.includes("aug")) return "3 - 7 August";
+      return "3 - 17 July";
+    }
+
+    function inferLocation(value) {
+      const text = String(value).toLowerCase();
+      if (text.includes("dakota")) return "Dakota";
+      if (text.includes("noord")) return "Noord";
+      if (text.includes("playa")) return "Playa Pabou";
+      if (text.includes("santa")) return "Santa Cruz";
+      if (text.includes("piedra") || text.includes("plat")) return "Piedra Plat";
+      return "All locations";
+    }
+
+    function renderFilters() {
+      const filters = ["All", ...unique(mediaItems.flatMap((item) => [item.category, item.location]).filter(Boolean))];
+      if (!filters.includes(activeFilter)) activeFilter = "All";
+      filterStrip.innerHTML = filters.map((filter) => `
+        <button class="filter-button ${filter === activeFilter ? "active" : ""}" type="button" data-filter="${filter}">${filter}</button>
+      `).join("");
+      filterStrip.querySelectorAll("[data-filter]").forEach((button) => {
+        button.addEventListener("click", () => {
+          activeFilter = button.dataset.filter;
+          renderFilters();
+          renderGallery();
+        });
+      });
+    }
+
+    function renderGallery() {
+      const filteredItems = activeFilter === "All"
+        ? mediaItems
+        : mediaItems.filter((item) => item.category === activeFilter || item.location === activeFilter);
+
+      gallerySummary.textContent = isPreviewMode
+        ? "Sample cards are shown until the OneDrive Worker is connected."
+        : `${filteredItems.length} item${filteredItems.length === 1 ? "" : "s"} loaded from OneDrive.`;
+      mediaState.hidden = filteredItems.length > 0;
+      mediaState.textContent = "No media matches this filter yet.";
+      galleryGrid.innerHTML = filteredItems.map(mediaCard).join("");
+    }
+
+    function mediaCard(item) {
+      const background = item.thumbnail
+        ? `url("${escapeAttribute(item.thumbnail)}")`
+        : item.color;
+      const href = item.url || "#";
+      return `
+        <article class="media-tile" style="--tile-bg: ${background};">
+          ${href !== "#" ? `<a class="tile-link" href="${escapeAttribute(href)}" target="_blank" rel="noreferrer" aria-label="Open ${escapeAttribute(item.title)}"></a>` : ""}
+          <div class="tile-content">
+            <div class="tag-row">
+              <span class="tag">${escapeHtml(item.week)}</span>
+              <span class="tag">${escapeHtml(item.category)}</span>
+            </div>
+            <h3>${escapeHtml(item.title)}</h3>
+            <p>${escapeHtml(item.caption)}</p>
+          </div>
+        </article>
+      `;
+    }
+
+    function renderWeeks() {
+      const counts = mediaItems.reduce((map, item) => {
+        map[item.week] = (map[item.week] || 0) + 1;
+        return map;
+      }, {});
+      const allWeeks = unique([...weekOrder, ...Object.keys(counts)]);
+      weekList.innerHTML = allWeeks.map((week) => `
+        <div class="week-item">
+          <span class="week-date">${escapeHtml(week)}</span>
+          <span class="week-name">${weekLabel(week)}</span>
+          <span class="week-count">${counts[week] || 0} item${counts[week] === 1 ? "" : "s"}</span>
+        </div>
+      `).join("");
+    }
+
+    function weekLabel(week) {
+      const labels = {
+        "3 - 17 July": "Arrivals, orientation, prep",
+        "20 - 24 July": "First volunteering week",
+        "27 - 31 July": "Second volunteering week",
+        "3 - 7 August": "Piedra Plat week",
+        "10 - 14 August": "Final volunteering week"
+      };
+      return labels[week] || "Summer camp media";
+    }
+
+    function unique(values) {
+      return [...new Set(values.map((value) => String(value || "").trim()).filter(Boolean))];
+    }
+
+    function escapeHtml(value) {
+      return String(value || "").replace(/[&<>"']/g, (character) => ({
+        "&": "&amp;",
+        "<": "&lt;",
+        ">": "&gt;",
+        '"': "&quot;",
+        "'": "&#039;"
+      })[character]);
+    }
+
+    function escapeAttribute(value) {
+      return escapeHtml(value).replace(/`/g, "&#096;");
+    }
+
+    loadMedia();
+    setInterval(loadMedia, REFRESH_MS);
+  </script>
   <script src="assets/site-components.js"></script>
 </body>
 </html>
